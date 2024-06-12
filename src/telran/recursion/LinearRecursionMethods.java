@@ -39,25 +39,13 @@ public class LinearRecursionMethods {
      * additional functions if any with the same limitations
      */
     public static int pow(int a, int b) {
-        int result;
         if (b < 0) {
             throw new IllegalArgumentException("b must be a positive integer");
-        } else if (b == 0) {
-            result = 1;
-        } else {
-            result = multiply(a, pow(a, b - 1));
         }
-        return result;
-    }
 
-    private static int multiply(int a, int b) {
-        int result;
-        if (b == 0) {
-            result = 0;
-        } else if (b > 0) {
-            result = a + multiply(a, b - 1);
-        } else {
-            result = -multiply(a, -b);
+        int result = 1;
+        if (b != 0) {
+            result = a * pow(a, b - 1);
         }
         return result;
     }
@@ -119,22 +107,10 @@ public class LinearRecursionMethods {
      * no static fields
      */
     public static int square(int x) {
-        int result;
-        if (x == 0) {
-            result = 0;
-        } else {
-            int absX = x < 0 ? -x : x;
-            result = squareHelper(absX, absX);
-        }
-        return result;
-    }
-
-    private static int squareHelper(int x, int y) {
-        int result;
-        if (y == 0) {
-            result = 0;
-        } else {
-            result = x + squareHelper(x, y - 1);
+        int result = 0;
+        int absX = x < 0 ? -x : x;
+        for (int i = 0; i < absX; i++) {
+            result += absX;
         }
         return result;
     }
@@ -149,18 +125,22 @@ public class LinearRecursionMethods {
      * length()
      */
     public static boolean isSubstring(String str, String substr) {
-        boolean result;
-        if (substr.length() > str.length()) {
-            result = false;
-        } else if (str.length() == 0 && substr.length() == 0) {
+        boolean result = false;
+        if (substr.length() == 0) {
             result = true;
-        } else if (str.length() == 0) {
-            result = false;
-        } else if (str.substring(0, substr.length()).equals(substr)) {
+        } else if (str.length() >= substr.length()) {
             result = true;
-        } else {
-            result = isSubstring(str.substring(1), substr);
+            for (int i = 0; i < substr.length(); i++) {
+                if (str.charAt(i) != substr.charAt(i)) {
+                    result = false;
+                    break;
+                }
+            }
+            if (!result) {
+                result = isSubstring(str.substring(1), substr);
+            }
         }
         return result;
     }
+
 }
