@@ -74,5 +74,5 @@ class LinearRecursionTest {
 		assertFalse(isSubstring(str, "daba"));
 		
 	}
-
+	
 }
